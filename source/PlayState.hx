@@ -359,7 +359,7 @@ class PlayState extends MusicBeatState
 		          }
 		          case 'cocoa' | 'eggnog':
 		          {
-	                          curStage = 'mall';
+	                      curStage = 'mall';
 
 		                  defaultCamZoom = 0.80;
 
@@ -591,7 +591,7 @@ class PlayState extends MusicBeatState
 		          }
               }
 
-		var gfVersion:String = 'gf';
+		var gfVersion:String = SONG.gfVersion;
 
 		switch (curStage)
 		{
@@ -603,12 +603,16 @@ class PlayState extends MusicBeatState
 				gfVersion = 'gf-pixel';
 			case 'schoolEvil':
 				gfVersion = 'gf-pixel';
+			default:
+				gfVersion = 'gf';
 		}
 
 		if (curStage == 'limo')
 			gfVersion = 'gf-car';
 
-		gf = new Character(400, 130, gfVersion);
+		SONG.gfVersion = gfVersion;
+
+		gf = new Character(400, 130, SONG.gfVersion);
 		gf.scrollFactor.set(0.95, 0.95);
 
 		dad = new Character(100, 100, SONG.player2);
@@ -1798,9 +1802,6 @@ class PlayState extends MusicBeatState
 
 				if (SONG.validScore)
 				{
-					#if !mobile
-					NGio.unlockMedal(60961);
-					#end
 					Highscore.saveWeekScore(storyWeek, campaignScore, storyDifficulty);
 				}
 
@@ -1868,17 +1869,17 @@ class PlayState extends MusicBeatState
 
 		var daRating:String = "sick";
 
-		if (noteDiff > Conductor.safeZoneOffset * 0.9)
+		if (noteDiff > Conductor.safeZoneOffset * 0.9 || noteDiff < Conductor.safeZoneOffset * -0.9)
 		{
 			daRating = 'shit';
 			score = 50;
 		}
-		else if (noteDiff > Conductor.safeZoneOffset * 0.75)
+		else if (noteDiff > Conductor.safeZoneOffset * 0.75 || noteDiff < Conductor.safeZoneOffset * -0.75)
 		{
 			daRating = 'bad';
 			score = 100;
 		}
-		else if (noteDiff > Conductor.safeZoneOffset * 0.2)
+		else if (noteDiff > Conductor.safeZoneOffset * 0.2 || noteDiff < Conductor.safeZoneOffset * -0.2)
 		{
 			daRating = 'good';
 			score = 200;
@@ -2026,6 +2027,7 @@ class PlayState extends MusicBeatState
 		var leftR = mcontrols.LEFT_R;
 
 		#else
+
 		var up = controls.UP;
 		var right = controls.RIGHT;
 		var down = controls.DOWN;
@@ -2040,6 +2042,7 @@ class PlayState extends MusicBeatState
 		var rightR = controls.RIGHT_R;
 		var downR = controls.DOWN_R;
 		var leftR = controls.LEFT_R;
+
 		#end
 
 		var controlArray:Array<Bool> = [leftP, downP, upP, rightP];
@@ -2276,6 +2279,8 @@ class PlayState extends MusicBeatState
 		var leftP = controls.LEFT_P;
 		#end
 
+		/*
+
 		if (leftP)
 			noteMiss(0);
 		if (downP)
@@ -2284,6 +2289,8 @@ class PlayState extends MusicBeatState
 			noteMiss(2);
 		if (rightP)
 			noteMiss(3);
+
+		*/
 	}
 
 	function noteCheck(keyP:Bool, note:Note):Void
@@ -2444,13 +2451,12 @@ class PlayState extends MusicBeatState
 			// dad.dance();
 		}
 		
-		/* These are some basic mid-song events. REMOVE THIS TEXT!
+		/* mid song event examples cuz funny
 
 		switch (curSong) {
 			case 'yoursonghere':
 				switch (curStep) {
-					case 128: //This is the curStep found in the Debug Menu. This is how events are timed.
-
+					case eventcurstep:
 						//Camera zoom
 						defaultCamZoom = 1.2; 
 
@@ -2459,7 +2465,8 @@ class PlayState extends MusicBeatState
 						dad = new Character(100, 100 'yourcharacter');
 						add(dad);
 				}
-		} Remove this when you're done. > */ 
+		}
+		*/
 	}
 
 	var lightningStrikeBeat:Int = 0;

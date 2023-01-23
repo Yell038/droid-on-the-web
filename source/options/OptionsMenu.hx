@@ -5,6 +5,7 @@ import flash.text.TextField;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.addons.display.FlxGridOverlay;
+import flixel.addons.transition.FlxTransitionableState;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.input.keyboard.FlxKey;
 import flixel.math.FlxMath;
@@ -28,7 +29,7 @@ class OptionsMenu extends MusicBeatState
 
 	private var grpControls:FlxTypedGroup<Alphabet>;
 
-	var menuItems:Array<String> = ['controls', 'downscroll: off', 'Debug Menu', 'About'];
+	var menuItems:Array<String> = ['controls', 'downscroll: off', 'characters: on', 'low quality: off', 'Debug Menu', 'About'];
 
 	var _pad:FlxVirtualPad;
 
@@ -59,8 +60,12 @@ class OptionsMenu extends MusicBeatState
 			menuItems[menuItems.indexOf('downscroll: off')] = 'downscroll: on';
 		}
 
-		if (config.getghosttapping()){
-			menuItems[menuItems.indexOf('ghost tapping: off')] = 'ghost tapping: on';
+		if (config.getcharacterset()){
+			menuItems[menuItems.indexOf('characters: on')] = 'characters: off';
+		}
+
+		if (config.getquality()){
+			menuItems[menuItems.indexOf('low quality: off')] = 'low quality: on';
 		}
 
 		for (i in 0...menuItems.length)
@@ -110,10 +115,20 @@ class OptionsMenu extends MusicBeatState
 				
 				case "downscroll: on" | "downscroll: off":
 					config.setdownscroll();
+					FlxTransitionableState.skipNextTransIn = true;
+					FlxTransitionableState.skipNextTransOut = true;
 					FlxG.resetState();
 
-				case "ghost tapping: on" | "ghost tapping: off":
-					config.setghosttapping();
+				case "characters: off" | "characters: on":
+					config.characterset();
+					FlxTransitionableState.skipNextTransIn = true;
+					FlxTransitionableState.skipNextTransOut = true;
+					FlxG.resetState();
+
+				case "low quality: on" | "low quality: off":
+					config.setquality();
+					FlxTransitionableState.skipNextTransIn = true;
+					FlxTransitionableState.skipNextTransOut = true;
 					FlxG.resetState();
 
 				case "Debug Menu":

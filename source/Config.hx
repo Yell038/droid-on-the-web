@@ -14,6 +14,7 @@ class Config {
     	save.bind("saveconrtol");
     }
 
+	//downscroll
     public function setdownscroll(?value:Bool):Bool {
 		if (save.data.isdownscroll == null) save.data.isdownscroll = false;
 		
@@ -27,15 +28,30 @@ class Config {
         return false;
     }
 
-	public function setghosttapping(?value:Bool):Bool {
-		if (save.data.isghosttapping == null) save.data.isghosttapping = false;
-		save.data.isghosttapping = !save.data.isghosttapping;
+	//character
+	public function characterset(?value:Bool):Bool {
+		if (save.data.ischaracterset == null) save.data.ischaracterset = false;
+		save.data.ischaracterset = !save.data.ischaracterset;
 		save.flush();
-        return save.data.isghosttapping;
+        return save.data.ischaracterset;
 	}
 
-	public function getghosttapping():Bool {
-        if (save.data.isghosttapping != null) return save.data.isghosttapping;
+	public function getcharacterset():Bool {
+        if (save.data.ischaracterset != null) return save.data.ischaracterset;
+        return false;
+    }
+
+	//downscroll
+    public function setquality(?value:Bool):Bool {
+		if (save.data.islq == null) save.data.islq = false;
+		
+		save.data.islq = !save.data.islq;
+		save.flush();
+        return save.data.islq;
+	}
+
+    public function getquality():Bool {
+        if (save.data.isdownscroll != null) return save.data.islq;
         return false;
     }
 

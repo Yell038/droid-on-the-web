@@ -32,9 +32,15 @@ class Note extends FlxSprite
 	public static var BLUE_NOTE:Int = 1;
 	public static var RED_NOTE:Int = 3;
 
+	//downscroll crap or smth
+	var config:Config = new Config();
+	var downscroll_isenabled:Bool = false;
+
 	public function new(strumTime:Float, noteData:Int, ?prevNote:Note, ?sustainNote:Bool = false)
 	{
 		super();
+
+		downscroll_isenabled = config.getdownscroll();
 
 		if (prevNote == null)
 			prevNote = this;
@@ -126,6 +132,10 @@ class Note extends FlxSprite
 			alpha = 0.6;
 
 			x += width / 2;
+
+			if (downscroll_isenabled) {
+				flipY = true;
+			}
 
 			switch (noteData)
 			{

@@ -789,27 +789,6 @@ class PlayState extends MusicBeatState
 
 		FlxG.fixedTimestep = false;
 
-
-		// mobile controls here!!!
-		#if html5
-		mcontrols = new Mobilecontrols();
-
-		var camcontrol = new FlxCamera();
-		FlxG.cameras.add(camcontrol);
-		camcontrol.bgColor.alpha = 0;
-		mcontrols.cameras = [camcontrol];
-
-		add(mcontrols);
-
-		_pad = new ui.FlxVirtualPad(NONE, B2);
-		_pad.alpha = 0.75;
-
-		_pad.cameras = [camcontrol];
-
-		add(_pad);
-
-		#end
-
 		var ybar:Float = downscroll_isenabled ? FlxG.height * 0.1 : FlxG.height * 0.9;
 
 		healthBarBG = new FlxSprite(0, ybar).loadGraphic(Paths.image('healthBar'));
@@ -849,6 +828,8 @@ class PlayState extends MusicBeatState
 		// if (SONG.song == 'South')
 		// FlxG.camera.alpha = 0.7;
 		// UI_camera.zoom = 1;
+
+		var hitBox:mobile.HitBox = new mobile.HitBox(); add(hitBox);
 
 		// cameras = [FlxG.cameras.list[1]];
 		startingSong = true;
